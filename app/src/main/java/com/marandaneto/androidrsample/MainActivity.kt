@@ -25,16 +25,16 @@ class MainActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView)
 
-//        it can be empty if no historical process reasons
+//        it can be empty if no historical process exit reasons
         if (exits.isNotEmpty()) {
-            // https://developer.android.com/reference/kotlin/android/app/ApplicationExitInfo
+//            https://developer.android.com/reference/kotlin/android/app/ApplicationExitInfo
             val lastExitInfo = exits.first()
 
             textView.text = lastExitInfo.toString()
 
             Log.d(TAG, "reason: ${lastExitInfo.reason}")
 
-            // in milliseconds since the epoch
+//            in milliseconds since the epoch
             Log.d(TAG, "timestamp: ${lastExitInfo.timestamp}")
 
             lastExitInfo.description?.let {
@@ -74,5 +74,5 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
     }
 
-    external fun crash()
+    private external fun crash()
 }
