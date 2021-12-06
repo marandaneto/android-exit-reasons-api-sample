@@ -2,17 +2,20 @@ package com.marandaneto.androidrsample
 
 import android.app.ActivityManager
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import java.io.BufferedReader
 import kotlin.text.Charsets.UTF_8
 
-//import com.getkeepsafe.relinker.ReLinker
 //import java.lang.RuntimeException
 
 class MainActivity : AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,10 +45,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             lastExitInfo.traceInputStream?.let { inputStream ->
-                Log.d(TAG, "traceInputStream: ${inputStream.bufferedReader().use { it.readText() }}")
+                val content = inputStream.bufferedReader().use(BufferedReader::readText)
+                Log.d(TAG, "traceInputStream: $content")
             }
             lastExitInfo.processStateSummary?.let {
-                Log.d(TAG, "processStateSummary: ${it.toString(UTF_8)}")
+                val content = it.toString(UTF_8)
+                Log.d(TAG, "processStateSummary: $content")
             }
         }
 
@@ -57,14 +62,11 @@ class MainActivity : AppCompatActivity() {
 //            System.exit(0)
 
 //            simulate ANR
-//            Thread.sleep(15000)
+            Thread.sleep(15000)
 
 //            simulate segfault
-            crash()
+//            crash()
         }
-
-//        use this if UnsatisfiedLinkError
-//        ReLinker.loadLibrary(applicationContext, "native-sample")
     }
 
     companion object {
